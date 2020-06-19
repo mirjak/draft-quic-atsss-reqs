@@ -344,6 +344,19 @@ The 5G control plane provides the UE and the ATSSS UPF with rules as discussed i
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 {: #fig-arch title="Simplified Reference Architecture for ATSSS"}
 
+## Multi-Access PDU (MA-PDU) session
+
+The Multi-Access PDU (MA-PDU) session is the connectivity building block for ATSSS services. A MA PDU Session supports user-plane paths simultaneously over both 3GPP access and non-3GPP access interfaces, in contrast to regular (single-access) PDU Sessions that at a given point in time only has user plane over either 3GPP access or non-3GPP access.. A UE will register (authenticate and establish a signaling connection, including ciphering) on each of the access interfaces it intends to use. Life cycle management of MA-PDU session components (establish, modify, release) is performed by the signaling channels from the UE to the network. 
+
+The full instantiation of an MA-PDU session is a 3GPP access link concatenated with an N3/N9 tunnel connecting the UE to the ATSSS UPF that anchors the MA-PDU session via the 3GPP access, and an non-3GPP access link concatenated with an N3/N9 tunnel connecting the UE to the ATSSS UPF that anchors the MA-PDU session via the non-3GPP access. The session itself may be IPv4, IPv6, dual-stack IPv4/v6 or Ethernet. The unstructured session type is not supported for MA-PDU sessions, nor are all ATSSS traffic distribution modes supported by the Ethernet session type.
+
+The setup of the MA-PDU session is initiated by the UE using the signaling channel on each of the 3GPP and non-3GPP interfaces.  If the UE is registered on a common PLMN over both accesses the session can be set up via a single request made over either signaling path. If the UE is registered on different PLMNs or initially only registered on one, the MA-PDU construct is established over each access separately.
+
+The UE provides in signaling the desire the establish the session, and the preferred ATSSS capability to use, which gives the network sufficient information to select a suitably capable UPF to serve as the network anchor for the session. If the legs are independently established, the UE provides information to correlate the addition of a subsequent N3/N9 tunnel on a separate access such that the selected UPF can perform downstream traffic distribution. 
+
+The MA-PDU session that uses ATSSS-LL functionality is allocated a single IP address by NAS procedures. A UE that successfully requested MP-TCP functionality is allocated a single IP address for non-MPTCP traffic and two IP addresses, one for each interface between the UE MP-TCP function and each class of access.
+
+
 ## External IP Addresses Used by the ATSSS UPF
 
 Depending on the ATSSS mode, the ATSSS UPF may translate the access network specific addresses into an address called the Multi-Access (MA) IP address and vice versa. Such an address is also directly assigned to the UE (that is, packets that are not eligible for the ATSSS service are sourced by the UE with that IP address).
