@@ -811,7 +811,7 @@ Section 6 of {I-D.ietf-quic-datagram} discusses security considerations specific
 
 # Acknowledgements
 
-Many thanks to Anna Brunstrom, Dieter Gludovacz, Dirk von-Hugo, Tim Costello, Stephen Johnson, and Florin Baboescu for the review, comments, and suggestions.
+Many thanks to Anna Brunstrom, Dieter Gludovacz, Dirk von-Hugo, Tim Costello, Stephen Johnson, and Florin Baboescu for the review, comments, and suggestions. Thanks to David Allan for review and provding a contribution on the MA-PDU Session description.
 
 # Document History
 
