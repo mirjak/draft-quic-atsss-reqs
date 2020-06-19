@@ -306,9 +306,9 @@ using congestion control schemes.
 
 One of these access networks is managed by a 5G provider according to
 the 3GPP specifications. The second network is potentially managed by
-a different organization. It is important to note that in this second case, there
+a different organization and may not be trusted. It is important to note that in this untrusted case, there
 is often an IPSec tunnel between the UE and a dedicated device in the 5G network
-(not shown in {{fig-arch}}). A dedicated IP address is assigned by means of Internet Key Exchange version 2 (IKEv2) to the UE to access the 5G Core via this second network. 
+(not shown in {{fig-arch}}). A dedicated IP address is assigned by means of Internet Key Exchange version 2 (IKEv2) to the UE to access the 5G Core via this second network. In the trusted case a tunnel and encryption is not required, and addressing is via 5GC procedures.
 
 The UE interacts with a distant server
 through a User Plane Function hosting the ATSSS functionality. This UPF is called hereafter ATSSS UPF.
@@ -496,7 +496,7 @@ For non-TCP traffic, QUIC is already the dominant part of UDP traffic. A solutio
 Some ATSSS modes can be natively supported by the base QUIC specification for QUIC flows. For example, the “Active-Standby” and “Smallest Delay” steering modes can be supported directly between an UE and a QUIC server without any assistance from the network other than the performance measurement information. 
 
 Further, QUIC provides a feature called connection migration (Section 9 of {{I-D.ietf-quic-transport}}) that makes it possible to move a QUIC connection from one path/IP address to another without terminating and reestablishing the connection.
-Connection migration can further enable traffic switching but does not support traffic splitting as only one path can be used simultaneously. 
+Connection migration can further enable traffic switching but does not support traffic splitting as only one path can be used simultaneously.  This augments the underlying mobility mechanisms provided by the mobile network.
 
 An extension to QUIC to support simultaneous use of multiple paths is proposed in {{I-D.deconinck-quic-multipath}}.
 However, similar to a native MPTCP connection, a (MP)QUIC connection initiated between the UE and a server without the ATSSS UPF assistance cannot benefit from any direct application of the ATSSS steering methods based on network input given that the steering policy as currently defined in ATSSS is local to the UE and the ATSSS UPF and there are no means to signal that policy to a remote server. 
