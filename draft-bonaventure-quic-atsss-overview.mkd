@@ -232,9 +232,10 @@ to improve the up and download throughput performance of individual flows.
 The GiGA LTE and GiGA 5G services deployed using Multipath TCP in South Korea are examples of this use case {{IETFJ16}}.
 
 To support these different use cases in 5G networks, 3GPP is defining the
-Access Traffic Steering, Switching and Splitting (ATSSS) service {{TS23501}}. This work is
+Access Traffic Steering, Switching and Splitting (ATSSS) service {{TS23501}}
+to allow the simultaneous use of the combination of a 3GPP and a non-3GPP network interface. This work is
 further adopted by the Broadband Forum to provide similar capabilities to residential gateways
-equipped with multiple access interfaces, in the continuity of the Hybrid Access Networks {{TR-348}}.
+equipped with multiple access interfaces, in the continuity of the Hybrid Access Networks {{TR-348}}. 
 
 In this document, we abstract many of the technical details of future 5G networks 
 to explain the capabilities ATSSS needs, which may impact decisions about future work on IETF protocols.
@@ -290,7 +291,7 @@ The 5G Core supports a service that provides exchange of data between a User Equ
 
 It is out of the scope of this document to provide a comprehensive overview of 5G System (5GS) architecture. In particular, this document does not describe how PDU Sessions are established, and thus how IP addresses/prefixes are assigned to requesting UEs. 
 
-An UE can be provided a multi-access PDU Connectivity Service. That is, an UE can exchange data with a PDN by using a "3GPP access network" and a "non-3GPP access network" (often a WLAN). This is realized using the ATSSS service that is provided in the 5G core network control plane and user plane. The user plane part of the ATSSS functionality is contained in the User Plane Function (UPF) that manages the UE's PDU session.
+An UE can be provided a multi-access PDU Connectivity Service. That is, an UE can exchange data with a PDN by using a "3GPP access network" and a "non-3GPP access network" (often a WLAN). This is realized using the ATSSS service that is provided in the 5G core network control plane and user plane. The user plane part of the ATSSS functionality is contained in the User Plane Function (UPF) that is controlled by the Session Management Function (SMF) that manages the UE's PDU session.
 
 
 
@@ -306,7 +307,7 @@ using congestion control schemes.
 One of these access networks is managed by a 5G provider according to
 the 3GPP specifications. The second network is potentially managed by
 a different organization. It is important to note that in this second case, there
-is an IPSec tunnel between the UE and a dedicated device in the 5G network
+is often an IPSec tunnel between the UE and a dedicated device in the 5G network
 (not shown in {{fig-arch}}). A dedicated IP address is assigned by means of Internet Key Exchange version 2 (IKEv2) to the UE to access the 5G Core via this second network. 
 
 The UE interacts with a distant server
@@ -388,7 +389,7 @@ description of several packet schedulers may be found in
 {{I-D.bonaventure-iccrg-schedulers}}.
 
 The "Active-Standby" mode can be implemented using a path manager that tries to
-use the active access and switches to the standby one after a certain number
+use the active access designated as primary path and switches to the standby one after a certain number
 of retransmissions. This mode of operation is similar to the utilization of
 Multipath TCP on iOS smartphones {{RFC8041}}.
 
@@ -480,7 +481,7 @@ The MPTCP-based ATSSS approach discussed in the previous section is specific to 
 obviously. Therefore it does not support non-TCP traffic, such as
 UDP, QUIC {{QUIC-Deployment}} or IPsec and Datagram Transport Layer Security (DTLS) Virtual Private Network (VPN) services.
 
-As the share of these protocols grows, mainly driven by QUIC deployment, a future ATSSS needs to extend beyond supporting TCP only. The seamless handover provided by ATSSS is particularly useful for real-time traffic (e.g., voice or video calls), 
+As the share of these protocols grows, mainly driven by QUIC deployment, a future ATSSS needs to extend beyond supporting TCP only. There is a funnctin called ATSSS-LL that operate on a low layer and can therefore also be applied to non-TCP traffic but this services does not support traffic splitting but only steering and expectiionally switching. The seamless handover provided by splitting is particularly useful for real-time traffic (e.g., voice or video calls), 
 
 Several proposals to carry non-TCP traffic have been discussed, including
 using TCP {{I-D.boucadair-mptcp-plain-mode}} or
@@ -563,14 +564,14 @@ but splitting cannot be supported.
 Path validation
 induces a delay when switching as packets are buffered. Further, congestion control state is
 reset on a new path and needs to ramp up. When frequent handovers happen, 
-splitting traffic over multiple paths simulaneously can be beneficial for
+splitting traffic over two paths simulaneously can be beneficial for
 a smooth user experience.
-Further, of course, the ability to use multiple paths simultaneously also increases the 
+Further, of course, the ability to use two paths simultaneously also increases the 
 maximum capacity available, which can also be beneficial in some cases.
 
 This option is not considered a valid approach for the ATSSS Phase 2 discussed within 3GPP.
 
-### Multiple QUICv1 Tunnels with Unreliable Datagram Extension and Connection Migration {#sec-quic-multiple-tunnels}
+### Two QUICv1 Tunnels with Unreliable Datagram Extension and Connection Migration {#sec-quic-multiple-tunnels}
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
                ------------
@@ -594,7 +595,7 @@ This option is not considered a valid approach for the ATSSS Phase 2 discussed w
 {: #fig-multiple-quic title="Traffic steering of two end-to-end flows using multiple QUICv1 tunnels"}
 
 Another approach is to use one QUIC connection over each access network.
-In this case, there are multiple QUIC connections that are used as tunnels from the UE
+In this case, there are two QUIC connections that are used as tunnels from the UE
 to the ATSSS UPF to transport traffic that belongs to one or multiple flows. The UE and ATSSS
 UPF need to select one QUIC connection to forward each application data packet,
 based on the rules provided by the network. 
