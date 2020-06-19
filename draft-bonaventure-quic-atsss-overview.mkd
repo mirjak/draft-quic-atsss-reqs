@@ -491,7 +491,7 @@ The work within 3GPP now focuses on using QUIC as the baseline for ATSSS Phase 2
 ### QUIC and Multihoming
 
 
-For non-TCP traffic, QUIC is already the dominant part of UDP traffic. A solution as realized with the Convert Protocol for (MP)TCP is not possible for QUIC as a QUIC connection cannot be intercepted and converted as in the ATSSS architecture for (MP)TCP ({{fig-mptcp-arch}}). For (MP)TCP only the transport protocol (TCP) is intercepted, while transport security provided by Transport Layer Security (TLS) on top of TCP stays in tact. For QUIC transport, security is integrated into the transport protocol and thus cannot be intercepted.
+For non-TCP traffic, QUIC is already the dominant part of UDP traffic. A solution as realized with the Convert Protocol for (MP)TCP is not possible for QUIC as a QUIC connection cannot be intercepted and converted as in the ATSSS architecture for (MP)TCP ({{fig-mptcp-arch}}). For (MP)TCP only the transport protocol (TCP) is intercepted, while transport security provided by Transport Layer Security (TLS) on top of TCP stays intact. For QUIC transport, security is integrated into the transport protocol and thus cannot be intercepted.
 
 Some ATSSS modes can be natively supported by the base QUIC specification for QUIC flows. For example, the “Active-Standby” and “Smallest Delay” steering modes can be supported directly between an UE and a QUIC server without any assistance from the network other than the performance measurement information. 
 
